@@ -201,7 +201,7 @@
                 ],
                 "probes": [
                   {
-                    "name": "tcpProbe",
+                    "name": "[parameters('lbProbeID')]",
                     "properties": {
                       "protocol": "tcp",
                       "port": 80,
