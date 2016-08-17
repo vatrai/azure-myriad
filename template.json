@@ -18,6 +18,10 @@
             "defaultValue": "hajjstagilb",
             "type": "String"
         },
+       "lbProbeID": {
+         "defaultValue": "[concat('hajjstagilb' ,'/probes/tcpProbe')]",
+         "type": "String"
+        },
         "publicIPAddresses_hajjstagipip_name": {
             "defaultValue": "hajjstagipip",
             "type": "String"
@@ -190,7 +194,7 @@
                   "enableFloatingIP": false,
                   "idleTimeoutInMinutes": 5,
                   "probe": {
-                    "id": "tcpProbe"
+                    "id": "[parameters('lbProbeID')]"
                       }
                     }
                   }
