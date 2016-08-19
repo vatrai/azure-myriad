@@ -18,7 +18,7 @@
             "defaultValue": "hajjstagilb",
             "type": "String"
         },
-        "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancers_hajjstagilb_name'))]",
+        "lbID": "[resourceId('Microsoft.Network/loadBalancers'),parameters('loadBalancers_hajjstagilb_name')]",
 
     "lbPoolID": "[concat(parameters('lbID'),'/backendAddressPools/bepool1')]",
     "lbProbeID": "[concat(parameters('lbID'),'/probes/tcpProbe')]",
