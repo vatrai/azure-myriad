@@ -18,6 +18,10 @@
             "defaultValue": "hajjstagilb",
             "type": "String"
         },
+       "lbProbeID": {
+         "defaultValue": "[concat('hajjstagilb' ,'/probes/tcpProbe')]",
+         "type": "String"
+        },
         "publicIPAddresses_hajjstagipip_name": {
             "defaultValue": "hajjstagipip",
             "type": "String"
@@ -170,11 +174,42 @@
                 ],
                 "backendAddressPools": [
                     {
-                        "name": "hajjstagibepool"
+                        "name": "hajjstagibepool",
+                        "id": "hajjstagibepool"
                     }
                 ],
-                "loadBalancingRules": [],
-                "probes": [],
+                "loadBalancingRules": [
+                {
+                  "name": "LBRule",
+                  "properties": {
+                    "frontendIPConfiguration": {
+                    "id": "[parameters('loadBalancers_hajjstagilb_id')]"
+                  },
+                  "backendAddressPool": {
+                    "id": "hajjstagibepool"
+                  },
+                  "protocol": "tcp",
+                  "frontendPort": 80,
+                  "backendPort": 80,
+                  "enableFloatingIP": false,
+                  "idleTimeoutInMinutes": 5,
+                  "probe": {
+                    "id": "[parameters('lbProbeID')]"
+                      }
+                    }
+                  }
+                ],
+                "probes": [
+                  {
+                    "name": "[parameters('lbProbeID')]",
+                    "properties": {
+                      "protocol": "tcp",
+                      "port": 80,
+                      "intervalInSeconds": "5",
+                      "numberOfProbes": "2"
+                    }
+                  }
+                ],
                 "inboundNatRules": [
                     {
                         "name": "hajjstaginatpool.1",
