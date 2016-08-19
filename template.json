@@ -18,11 +18,11 @@
             "defaultValue": "hajjstagilb",
             "type": "String"
         },
-       "lbProbeID": {
-         "defaultValue": "[concat('hajjstagilb' ,'/probes/tcpProbe')]",
-         "type": "String"
-        },
-        "publicIPAddresses_hajjstagipip_name": {
+        "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancers_hajjstagilb_name'))]",
+
+    "lbPoolID": "[concat(parameters('lbID'),'/backendAddressPools/bepool1')]",
+    "lbProbeID": "[concat(parameters('lbID'),'/probes/tcpProbe')]",
+    "publicIPAddresses_hajjstagipip_name": {
             "defaultValue": "hajjstagipip",
             "type": "String"
         },
@@ -134,21 +134,40 @@
                             "version": "latest"
                         }
                     },
-                    "networkProfile": {
-                        "networkInterfaceConfigurations": [
-                            {
-                                "name": "[concat(parameters('virtualMachineScaleSets_hajjstagi_name'),'nic')]",
-                                "properties": {
-                                    "primary": true,
-                                    "ipConfigurations": [
-                                        {
-                                            "name": "[concat(parameters('virtualMachineScaleSets_hajjstagi_name'),'ipconfig')]"
-                                        }
-                                    ]
-                                }
-                            }
+
+          "networkProfile": {
+            "networkInterfaceConfigurations": [
+              {
+                "name": "nic1",
+                "properties": {
+                  "primary": "true",
+                  "ipConfigurations": [
+                    {
+                      "name": "ip1",
+                      "properties": {
+                        "subnet": {
+                          "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', parameters('virtualNetworks_hajjstagivnet_name'), '/subnets/', 'hajjstagisubnet' )]"
+                        },
+                        "loadBalancerBackendAddressPools": [
+                          {
+                            "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', parameters('loadBalancers_hajjstagilb_name'), '/backendAddressPools/bepool1')]"
+                          }
+                        ],
+                        "loadBalancerInboundNatPools": [
+                          {
+                            "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', parameters('loadBalancers_hajjstagilb_name'), '/inboundNatPools/natpool22')]"
+                          }
                         ]
+                      }
                     }
+                  ]
+                }
+              }
+            ]
+          }
+
+
+                   
                 }
             },
             "resources": [],
@@ -186,7 +205,7 @@
                     "id": "[parameters('loadBalancers_hajjstagilb_id')]"
                   },
                   "backendAddressPool": {
-                    "id": "hajjstagibepool"
+                    "id": "[parameters('lbPoolID')]"
                   },
                   "protocol": "tcp",
                   "frontendPort": 80,
@@ -201,7 +220,7 @@
                 ],
                 "probes": [
                   {
-                    "name": "[parameters('lbProbeID')]",
+                    "name": "tcpProbe",
                     "properties": {
                       "protocol": "tcp",
                       "port": 80,
