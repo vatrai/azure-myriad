@@ -20,8 +20,8 @@
         },
         "lbID": "[resourceId('Microsoft.Network/loadBalancers', 'hajjstagilb')]",
 
-    "lbPoolID": "[concat(parameters('lbID'),'/backendAddressPools/bepool1')]",
-    "lbProbeID": "[concat(parameters('lbID'),'/probes/tcpProbe')]",
+    "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/bepool1')]",
+    "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
     "publicIPAddresses_hajjstagipip_name": {
             "defaultValue": "hajjstagipip",
             "type": "String"
@@ -205,7 +205,7 @@
                     "id": "[parameters('loadBalancers_hajjstagilb_id')]"
                   },
                   "backendAddressPool": {
-                    "id": "[parameters('lbPoolID')]"
+                    "id": "[variables('lbPoolID')]"
                   },
                   "protocol": "tcp",
                   "frontendPort": 80,
@@ -213,7 +213,7 @@
                   "enableFloatingIP": false,
                   "idleTimeoutInMinutes": 5,
                   "probe": {
-                    "id": "[parameters('lbProbeID')]"
+                    "id": "[variables('lbProbeID')]"
                       }
                     }
                   }
