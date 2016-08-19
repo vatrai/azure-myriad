@@ -18,10 +18,18 @@
             "defaultValue": "hajjstagilb",
             "type": "String"
         },
-        "loadBalancerName": "hajjstagilb", 
-        "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancerName'))]",
-    "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/bepool1')]",
-    "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
+        "lbID": { 
+         "defaultValue": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancers_hajjstagilb_name'))]",
+        "type": "String"
+        },
+    "lbPoolID": { 
+      "defaultValue": "[concat(variables('lbID'),'/backendAddressPools/bepool1')]",
+      "type": "String"
+    },
+    "lbProbeID": { 
+      "defaultValue": "[concat(variables('lbID'),'/probes/tcpProbe')]",
+      "type": "String"
+    },
     "publicIPAddresses_hajjstagipip_name": {
             "defaultValue": "hajjstagipip",
             "type": "String"
