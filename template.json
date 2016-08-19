@@ -18,8 +18,8 @@
             "defaultValue": "hajjstagilb",
             "type": "String"
         },
-        "lbID": "[ concat(resourceId('Microsoft.Network/loadBalancers'), 'hajjstagilb')]",
-
+        "loadBalancerName": "hajjstagilb", 
+        "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancerName'))]",
     "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/bepool1')]",
     "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]",
     "publicIPAddresses_hajjstagipip_name": {
