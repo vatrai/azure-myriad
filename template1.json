@@ -51,7 +51,7 @@
     "osType": {
       "publisher": "Canonical",
       "offer": "UbuntuServer",
-      "sku": "15.04",
+      "sku": "14.04.4-LTS",
       "version": "latest"
     },
     "imageReference": "[variables('osType')]",
@@ -203,7 +203,7 @@
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
       ],
       "sku": {
-        "name": "Standard_A1",
+        "name": "Standard_D2",
         "tier": "Standard",
         "capacity": "[parameters('instanceCount')]"
       },
