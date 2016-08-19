@@ -18,18 +18,6 @@
             "defaultValue": "hajjstagilb",
             "type": "String"
         },
-        "lbID": { 
-         "defaultValue": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancers_hajjstagilb_name'))]",
-        "type": "String"
-        },
-    "lbPoolID": { 
-      "defaultValue": "[concat(variables('lbID'),'/backendAddressPools/bepool1')]",
-      "type": "String"
-    },
-    "lbProbeID": { 
-      "defaultValue": "[concat(variables('lbID'),'/probes/tcpProbe')]",
-      "type": "String"
-    },
     "publicIPAddresses_hajjstagipip_name": {
             "defaultValue": "hajjstagipip",
             "type": "String"
@@ -71,7 +59,12 @@
             "type": "String"
         }
     },
-    "variables": {},
+    "variables": {
+            "lbID": "[resourceId('Microsoft.Network/loadBalancers','hajjstagilb')]",
+        "lbPoolID": "[concat(variables('lbID'),'/backendAddressPools/bepool1')]",
+        "lbProbeID": "[concat(variables('lbID'),'/probes/tcpProbe')]"
+
+    },
     "resources": [
         {
             "comments": "Generalized from resource: '/subscriptions/3b164aed-04ff-40d9-9335-e0b56338dc3d/resourceGroups/hajjstaging/providers/Microsoft.Cache/Redis/hajjstagingcache'.",
